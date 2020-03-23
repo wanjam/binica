@@ -1,3 +1,19 @@
+----------------------------------------------------------
+Comment Wanja Moessing: 
+Instructions to compile on Intel-based 64bit Ubuntu 16.04 Server:
+# 1. install BLAS/LAPACK/F2C(in gfortran) via Ubuntu repositories
+sudo apt install libblas-dev liblapack-dev gfortran-9
+
+# 2. cd to this folder and make binaries
+make -f Makefile clean
+make -f Makefile
+
+The only adjustments to the original version are the following:
+- MMAP defined to activate memory mapping
+- using BLAS/LAPACK/F2C from official ubuntu repositories instead of netlab versions that ship with binica
+- fix warnings and errors that occured during compilation
+
+----------------------------------------------------------
 Extended Infomax ICA Binary compiled for Windows 10 x64
 Based on original source win32 Visual Studio 6 (2001) source by 
 Sigurd Enghoff (http://cnl.salk.edu/~enghoff/download1/)
