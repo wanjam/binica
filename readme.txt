@@ -13,6 +13,9 @@ The only adjustments to the original version are the following:
 - using BLAS/LAPACK/F2C from official ubuntu repositories instead of netlab versions that ship with binica
 - fix warnings and errors that occured during compilation
 
+Instructions to compile with MKL:
+see MKLreadme.md
+
 ----------------------------------------------------------
 Extended Infomax ICA Binary compiled for Windows 10 x64
 Based on original source win32 Visual Studio 6 (2001) source by 
