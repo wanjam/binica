@@ -15,8 +15,8 @@
 #include <time.h>
 #include <math.h>
 #include <signal.h>
+
 #include "ica.h"
-#include "memap.h"
 
 #ifdef R250
 #include "r250.h"
@@ -361,7 +361,7 @@ void varsort(doublereal *data, doublereal *weights, doublereal *sphere, doublere
 		
 		meanvar[i].idx = i;
 		meanvar[i].val = dsum_(&n,sum,&inc);
-		if (verbose) printf("%i ",(int)(i+1));
+		if (verbose) printf("%d ",(int)(i+1));
 	}
 	if (verbose) printf("\n");
 	
@@ -562,8 +562,8 @@ void posact(doublereal *data, doublereal *trsf, integer m, integer n, doublereal
 void sigproc()
 {
   doublereal *sph = (doublereal*)malloc(CH_NUMBER*CH_NUMBER*sizeof(doublereal));
-  printf("number of components = %li\n",COMP_NUMBER);
-  printf("number of channels = %li\n",CH_NUMBER);
+  printf("number of components = %d\n",COMP_NUMBER);
+  printf("number of channels = %d\n",CH_NUMBER);
   eye(CH_NUMBER,sph);  
   fb_matwrite("temp.sph",CH_NUMBER*CH_NUMBER,sph);
   fb_matwrite("temp.wgt",COMP_NUMBER*CH_NUMBER,WW);
@@ -901,20 +901,20 @@ signal(SIGINT,sigproc);
 
 				if (verbose) {
 					if (!extended)
-						printf("step %li - lrate %5f, wchange %7.6f, angledelta %4.1f deg\n",step,lrate,change,DEGCONST*angledelta);
+						printf("step %d - lrate %5f, wchange %7.6f, angledelta %4.1f deg\n",step,lrate,change,DEGCONST*angledelta);
 					else {
 						for (i=0,j=0 ; i<chans ; i++) j += signs[i];
-						printf("step %li - lrate %5f, wchange %7.6f, angledelta %4.1f deg, %li subgauss\n",step,lrate,change,DEGCONST*angledelta,j);
+						printf("step %d - lrate %5f, wchange %7.6f, angledelta %4.1f deg, %d subgauss\n",step,lrate,change,DEGCONST*angledelta,j);
 					}
 				}
 			}
 			else
 				if (verbose) {
 					if (!extended)
-						printf("step %li - lrate %5f, wchange %7.6f\n",step,lrate,change);
+						printf("step %d - lrate %5f, wchange %7.6f\n",step,lrate,change);
 					else {
 						for (i=0,j=0 ; i<chans ; i++) j += signs[i];
-						printf("step %li - lrate %5f, wchange %7.6f, %li subgauss\n",step,lrate,change,j);
+						printf("step %d - lrate %5f, wchange %7.6f, %d subgauss\n",step,lrate,change,j);
 					}
 				}
 		}

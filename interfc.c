@@ -47,71 +47,71 @@
 #define HELPFILE "ica.sc" /* File containing help message. */
 #define COMM "!#%\0"      /* Characters to preceed comments. */
 
-#define HELPMSG "# ica - Perform Independent Component Analysis, standalone-version
-#
-#   Run the ICA algorithm of Bell & Sejnowski (1996) or the extended-ICA 
-#   of Lee, Girolami & Sejnowski (1998). Original Matlab code: Scott Makeig,
-#   Tony Bell, et al.; C++ code: Sigurd Enghoff, CNL / Salk Institute 7/98
-#
-#   Usage:   % ica < my.sc
-#
-#   Leading # -> use default values
-#   Edit a copy of this file to run an ica decomposition
-#   Contacts: {enghoff,scott,terry,tony,tewon}@salk.edu
-
-# Required variables:
-    DataFile     berger/modeldata # Input data to decompose (floats multiplexed
-                           #   by channel (i.e., chan1, chan2, ...))
-    chans        31        # Number of data channels (= data rows) 
-    frames       768       # Number of data points per epoch (= data columns)
-    epochs       436       # Number of epochs
-
-#	FrameWindow  20        # Number of frames per window
-#	FrameStep    4         # Number of frames to step per window
-#	EpochWindow  100       # Number of epochs per window
-#	EpochStep    25        # Number of epochs to step per window
-#	Baseline     25        # Number of data points contained in baseline
-
-    WeightsOutFile berger/data.wts # Output ICA weight matrix (floats)
-    SphereFile   berger/data.sph  # Output sphering matrix (floats)
-
-# Processing options:
- 
-#   sphering     on        # Flag sphering of data (on/off)   {default: on}
-#   bias         on        # Perform bias adjustment (on/off) {default: on}
-    \exextended     1         # Perform \"extended-ICA\" using tnah() with kurtosis
-                           #  estimation every N training blocks. If N < 0,
-                           #  fix number of sub-Gaussian components to -N 
-                           #  {default|0: off}
-#   pca          0         # Decompose a principal component subspace of
-                           #  the data. Retain this many PCs. {default|0: all}
-# Optional input variables:
- 
-#  WeightsInFile input.wts # Starting ICA weight matrix (nchans,ncomps)
-                           #  {default: identity or sphering matrix}
-    lrate        2.0e-3    # Initial ICA learning rate (float << 1)
-                           #  {default: heuristic ~5e-4}
-#   blocksize    20        # ICA block size (integer << datalength) 
-                           #  {default: heuristic fraction of log data length}
-#   stop         1.0e-6    # Stop training when weight-change < this value
-                           #  {default: heuristic ~0.000001}
-    maxsteps     512       # Max. number of ICA training steps {default: 128}
-#   posact       on        # Make each component activation net-positive
-                           # (on/off) {default: on}
-#   annealstep   0.98      # Annealing factor (range (0,1]) - controls 
-                           #  the speed of convergence.
-#   annealdeg    60        # Angledelta threshold for annealing {default: 60}
-#   momentum     0.0       # Momentum gain (range [0,1])      {default: 0}
-#   verbose      off        # Give ascii messages (on/off) {default: on}
- 
-# Optional outputs:
- 
-#  ActivationsFile data.act # Activations of each component (ncomps,points)
-#  BiasFile      data.bs   # Bias weights (ncomps,1)
-#  SignFile      data.sgn  # Signs designating (-1) sub- and (1) super-Gaussian 
-                           #  components (ncomps,1)
-
-# This script, \"ica.sc\" is a sample ica script file. Copy and modify it as
+#define HELPMSG "# ica - Perform Independent Component Analysis, standalone-version\n\
+#\n\
+#   Run the ICA algorithm of Bell & Sejnowski (1996) or the extended-ICA \n\
+#   of Lee, Girolami & Sejnowski (1998). Original Matlab code: Scott Makeig,\n\
+#   Tony Bell, et al.; C++ code: Sigurd Enghoff, CNL / Salk Institute 7/98\n\
+#\n\
+#   Usage:   % ica < my.sc\n\
+#\n\
+#   Leading # -> use default values\n\
+#   Edit a copy of this file to run an ica decomposition\n\
+#   Contacts: {enghoff,scott,terry,tony,tewon}@salk.edu\n\
+#\n\
+# Required variables:\n\
+#    DataFile     berger/modeldata # Input data to decompose (floats multiplexed\n\
+#                           #   by channel (i.e., chan1, chan2, ...))\n\
+#    chans        31        # Number of data channels (= data rows) \n\
+#    frames       768       # Number of data points per epoch (= data columns)\n\
+#    epochs       436       # Number of epochs\n\
+#\n\
+#	FrameWindow  20        # Number of frames per window\n\
+#	FrameStep    4         # Number of frames to step per window\n\
+#	EpochWindow  100       # Number of epochs per window\n\
+#	EpochStep    25        # Number of epochs to step per window\n\
+#	Baseline     25        # Number of data points contained in baseline\n\
+#\n\
+#    WeightsOutFile berger/data.wts # Output ICA weight matrix (floats)\n\
+#    SphereFile   berger/data.sph  # Output sphering matrix (floats)\n\
+#\n\
+# Processing options:\n\
+#\n\
+#   sphering     on        # Flag sphering of data (on/off)   {default: on}\n\
+#   bias         on        # Perform bias adjustment (on/off) {default: on}\n\
+#    \exextended     1         # Perform \"extended-ICA\" using tnah() with kurtosis\n\
+#                           #  estimation every N training blocks. If N < 0,\n\
+#                           #  fix number of sub-Gaussian components to -N \n\
+#                           #  {default|0: off}\n\
+#   pca          0         # Decompose a principal component subspace of\n\
+#                           #  the data. Retain this many PCs. {default|0: all}\n\
+# Optional input variables:\n\
+# \n\
+#  WeightsInFile input.wts # Starting ICA weight matrix (nchans,ncomps)\n\
+#                           #  {default: identity or sphering matrix}\n\
+#    lrate        2.0e-3    # Initial ICA learning rate (float << 1)\n\
+#                           #  {default: heuristic ~5e-4}\n\
+#   blocksize    20        # ICA block size (integer << datalength) \n\
+#                           #  {default: heuristic fraction of log data length}\n\
+#   stop         1.0e-6    # Stop training when weight-change < this value\n\
+#                           #  {default: heuristic ~0.000001}\n\
+#    maxsteps     512       # Max. number of ICA training steps {default: 128}\n\
+#   posact       on        # Make each component activation net-positive\n\
+#                           # (on/off) {default: on}\n\
+#   annealstep   0.98      # Annealing factor (range (0,1]) - controls \n\
+#                           #  the speed of convergence.\n\
+#   annealdeg    60        # Angledelta threshold for annealing {default: 60}\n\
+#   momentum     0.0       # Momentum gain (range [0,1])      {default: 0}\n\
+#   verbose      off        # Give ascii messages (on/off) {default: on}\n\
+# \n\
+# Optional outputs:\n\
+# \n\
+#  ActivationsFile data.act # Activations of each component (ncomps,points)\n\
+#  BiasFile      data.bs   # Bias weights (ncomps,1)\n\
+#  SignFile      data.sgn  # Signs designating (-1) sub- and (1) super-Gaussian \n\
+#                           #  components (ncomps,1)\n\
+#\n\
+# This script, \"ica.sc\" is a sample ica script file. Copy and modify it as\n\
 # desired. Note that the input data file(s) must be native floats."
 
 /* Globally defined variables */
@@ -676,18 +676,18 @@ void doit(key *keys) {
 			printf("%d ICA components using extended ICA.\n",ncomps);
 			
 			if (extblocks > 0)
-				printf("PDF will be calculated initially every %d blocks using %d data points.\n",extblocks,pdfsize);
+				printf("PDF will be calculated initially every %li blocks using %li data points.\n",extblocks,pdfsize);
 			else
-				printf("PDF will not be calculated. Exactly %d sub-Gaussian components assumed.\n",nsub);
+				printf("PDF will not be calculated. Exactly %li sub-Gaussian components assumed.\n",nsub);
 		}
 		
-		printf("Initial learning rate will be %g, block size %d.\n",lrate,block);
+		printf("Initial learning rate will be %g, block size %li.\n",lrate,block);
 		
 		if (momentum > 0.0)
 			printf("Momentum will be %g.\n",momentum);
 			
 		printf("Learning rate will be multiplied by %g whenever angledelta >= %g deg.\n",annealstep,annealdeg);
-		printf("Training will end when wchange < %g or after %d steps.\n",nochange,maxsteps);
+		printf("Training will end when wchange < %g or after %li steps.\n",nochange,maxsteps);
 		
 		if (biasflag)
 			printf("Online bias adjustment will be used.\n");
