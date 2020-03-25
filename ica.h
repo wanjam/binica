@@ -26,7 +26,7 @@
 #define PROB_WINDOW
 #endif*/
 
-#define MMAP
+/*#define MMAP*/
 
 /* If R250 is defined random number are generated using the r250 algorithm    */
 /* otherwise standard srand and rand function calls are used                  */

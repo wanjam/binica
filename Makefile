@@ -11,7 +11,7 @@ LAPACKLIB = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -lmkl_intel_ilp64 -lmkl_
 BLASLIB = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl
 F2CLIB    = /usr/lib/x86_64-linux-gnu/libgfortran.so.3
 LIBS      = $(OPENMPLIB) $(LAPACKLIB) $(BLASLIB) $(F2CLIB) -lm
-OBJS      = ica.o interfc.o r250.o randlcg.o dsum.o memap.o
+OBJS      = ica.o interfc.o r250.o randlcg.o dsum.o #memap.o
 
 ica_linux: Makefile.linux ica.h memap.h $(OBJS)
 	$(CC) -o ica_linux $(OBJS) $(LIBS)

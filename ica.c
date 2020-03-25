@@ -16,7 +16,7 @@
 #include <math.h>
 #include <signal.h>
 #include "ica.h"
-#include "memap.h"
+/*#include "memap.h"*/
 
 #ifdef R250
 #include "r250.h"
